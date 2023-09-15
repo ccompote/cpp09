@@ -6,8 +6,19 @@ RPN::~RPN(void) {}
 
 RPN::RPN(std::string &expression) : _expression(expression) {}
 
+RPN::RPN(const RPN &copy)
+{
+	*this = copy;
+}
 
-int RPN::evaluate() 
+RPN &RPN::operator=(const RPN &copy)
+{
+	if (this == &copy)
+		return (*this);
+	return (*this);
+}
+
+void RPN::evaluate() 
 {
 	std::istringstream iss(_expression);
 	std::string token;
@@ -17,15 +28,15 @@ int RPN::evaluate()
 		if (!isOperator(token)) 
 		{
 			int num;
-			if (std::istringstream(token) >> num) 
+			if (std::istringstream(token) >> num && num < 10) 
 				_numbers.push(num);
 			else
-				return -1; // Invalid input token
+				throw std::runtime_error("Error: wrong expression format"); 
 		}
 		else 
 		{
 			if (_numbers.size() < 2)
-				return -1; // Insufficient operands for the operator
+				throw std::runtime_error("Error: wrong expression format");  
 			int operand2 = _numbers.top();
 			_numbers.pop();
 			int operand1 = _numbers.top();
@@ -40,18 +51,18 @@ int RPN::evaluate()
 			else if (token == "/") 
 			{
 				if (operand2 == 0)
-					return -1; // Division by zero
+					throw std::runtime_error("Error: / by zero");
 				_numbers.push(operand1 / operand2);
 			}
 		}
 	}
 
 	if (_numbers.size() != 1)
-		return -1; // More than one number left on the stack
-	return _numbers.top();
+		throw std::runtime_error("Error: wrong expression format");
+	std::cout << _numbers.top() << std::endl;
 }
 
 bool RPN::isOperator(std::string &token) const 
 {
-	return token == "+" || token == "-" || token == "*" || token == "/";
+	return (token == "+" || token == "-" || token == "*" || token == "/");
 }

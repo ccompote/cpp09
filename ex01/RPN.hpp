@@ -2,6 +2,7 @@
 #include <stack>
 #include <sstream>
 #include <string>
+#include <stdexcept>
 
 class RPN
 {
@@ -14,8 +15,11 @@ class RPN
 
 		RPN(void);
 		RPN(std::string &expression);
+		RPN(const RPN &copy);
+		RPN &operator=(const RPN &copy);
 		~RPN(void);
-		int evaluate();
+
+		void evaluate();
 		bool isOperator(std::string &token) const;
 
 };

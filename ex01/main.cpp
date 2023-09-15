@@ -7,13 +7,16 @@ int main(int argc, char **argv)
         std::cerr << "Wrong arguments" << std::endl;
         return 1;
     }
-	std::string expression = argv[1];
-    RPN calculator(expression);
-    int result = calculator.evaluate();
+	try
+	{
 
-    if (result != -1)
-        std::cout << result << std::endl;
-    else
-        std::cerr << "Error" << std::endl;
+		std::string expression = argv[1];
+		RPN calculator(expression);
+		calculator.evaluate();
+	}
+	catch (const std::exception& ex)
+	{
+		std::cout << ex.what() << std::endl;
+	}
     return 0;
 }

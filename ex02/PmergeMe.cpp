@@ -9,7 +9,6 @@ Pmerge::Pmerge(std::vector<int> input)
 	_subarrsize = 2; // Adjust this as needed
 	_input = input;
 } 
-	
 
 Pmerge::Pmerge(const Pmerge &copy)
 {
@@ -25,14 +24,14 @@ Pmerge &Pmerge::operator=(const Pmerge &copy)
 
 void Pmerge::insertionSortV(int left, int right) 
 {
-    for (int i = left + 1; i <= right; i++) 
+    for (int i = left + 1; i <= right; i++)
 	{
         int key = _sortedVector[i];
         int j = i - 1;
 
         while (j >= left && _sortedVector[j] > key) 
 		{
-            _sortedVector[j + 1] = _sortedVector[j];
+            _sortedVector[j + 1] = _sortedVector[j]; 
             --j;
         }
 
@@ -42,7 +41,7 @@ void Pmerge::insertionSortV(int left, int right)
 
 void Pmerge::mergeV(int left, int middle, int right) 
 {
-    int n1 = middle - left + 1;
+    int n1 = middle - left + 1; 
     int n2 = right - middle;
 
     std::vector<int> leftArray(n1);
@@ -54,7 +53,6 @@ void Pmerge::mergeV(int left, int middle, int right)
         rightArray[j] = _sortedVector[middle + 1 + j];
 
     int i = 0, j = 0, k = left;
-
     while (i < n1 && j < n2) 
 	{
         if (leftArray[i] <= rightArray[j]) 
@@ -94,7 +92,7 @@ void Pmerge::mergeInsertionSortV(int left, int right)
         int middle = left + (right - left) / 2; 
         mergeInsertionSortV(left, middle); 
         mergeInsertionSortV(middle + 1, right);
-        mergeV(left, middle, right);
+        mergeV(left, middle, right); 
     }
 }
 
@@ -119,9 +117,13 @@ void Pmerge::mergeD(size_t left, size_t middle, size_t right)
 	size_t n1 = middle - left + 1;
 	size_t n2 = right - middle;
 
-	std::deque<int> leftDeque(_sortedDeque.begin() + left, _sortedDeque.begin() + left + n1);
-	std::deque<int> rightDeque(_sortedDeque.begin() + middle + 1, _sortedDeque.begin() + middle + 1 + n2);
+	std::deque<int> leftDeque(n1);
+    std::deque<int> rightDeque(n2);
 
+    for (size_t i = 0; i < n1; i++)
+        leftDeque[i] = _sortedDeque[left + i];
+    for (size_t j = 0; j < n2; j++)
+        rightDeque[j] = _sortedDeque[middle + 1 + j];
 	size_t i = 0, j = 0, k = left;
 
 	while (i < n1 && j < n2) 
@@ -185,7 +187,7 @@ void Pmerge::result(void)
     std::cout << "After (Vector): ";
     for (size_t i = 0; i < _sortedVector.size(); i++)
         std::cout << _sortedVector[i] << ' ';
-	std::cout << std::endl;
+		std::cout << std::endl;
 	std::cout << "Time to process a range of " << _input.size() << " elements with std::vector: " << elapsedTime  << std::endl;
 	
 	_sortedDeque.assign(_input.begin(), _input.end());

@@ -3,6 +3,7 @@
 #include <deque>
 #include <ctime>
 #include <cctype>
+#include <cstdlib>
 
 # define MICROSECOND 100000
 

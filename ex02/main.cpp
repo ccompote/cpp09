@@ -16,6 +16,11 @@ int main(int argc, char **argv)
 			std::cerr << "Error: Integers must be positive" << std::endl;
 			return (1);
 		}
+		else if (num == 0 && *argv[i] != '0')
+		{
+			std::cerr << "Error: only integers" << std::endl;
+			return (1);
+		}
         input.push_back(num);
     }
 	try

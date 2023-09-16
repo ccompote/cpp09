@@ -17,7 +17,8 @@ BitcoinExchange::~BitcoinExchange(void) {}
 
 int BitcoinExchange::opencsv(std::string filename)
 {
-	std::ifstream rates(filename);
+	const char *ffile = filename.c_str();
+	std::ifstream rates(ffile);
 	if (!rates)
 	{
 		std::cerr << "Error opening the csv file" << std::endl;
